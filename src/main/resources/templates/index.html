@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset = "ISO-8859-1" />
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<title>Mail Sender</title>
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row top-offset">
+		<div class="col-lg-6">
+			<form th:action="@{/send}" th:object="${mail}" method="post">
+  				<fieldset class="well">
+    				<div class="form-group">
+    					<label for="inputEmail" class="col-xl-2 control-label">Odbiorca</label>
+      					<div class="col-xl-10">
+        					<input type="text" th:field="*{to}" class="form-control" id="inputEmail" placeholder="Wprowadź adres e-mail odbiorcy">
+        					<div class="alert alert-danger text-center" th:if="${#fields.hasErrors('to')}" th:errors="*{to}">From Error</div>
+     					</div>
+   					 </div>
+    				<div class="form-group">
+    					<label for="inputSubject" class="col-xl-2 control-label">Temat</label>
+      					<div class="col-xl-10">
+        					<input type="text" th:field="*{subject}" class="form-control" id="inputSubject" placeholder="Wprowadź temat wiadomości">
+       					    <div class="alert alert-danger text-center" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}">Subject Error</div>
+      					</div>
+   					 </div>
+    				<div class="form-group">
+        				<label for="textArea" class="col-xl-2 control-label">Wiadomość</label>
+      					<div class="col-xl-10">
+        					<textarea class="form-control" rows="3" th:field="*{message}" id="textArea" placeholder="Wprowadź treść wiadomości"></textarea>
+        					<div class="alert alert-danger text-center" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message Error</div>
+      					</div>
+    				</div>
+        		    <div class="form-group">
+      					<div class="col-xl-12">
+        					<button type="submit" class="btn btn-success">Wyślij</button>
+     					</div>
+    				</div>
+  				</fieldset>
+			</form>
+			<form th:action="@{/addAttachment}" method="post" id="fileUploadForm" enctype="multipart/form-data">  
+				<div class="form-group">
+					<div id="attachmentErrorAlert" class="alert alert-danger text-center">
+  						
+					</div>	
+        		<label for="textArea" class="col-xl-2 control-label">Załączniki</label>
+      				<div class="col-xl-10">
+							<div class="file btn btn-primary">
+								<input type="file" id="upload" name="file"/>
+							</div>
+      				</div>
+					</div>
+					<div class="form-group">
+					<button id="btnSubmit" type="submit" class="btn btn-danger">Dodaj załącznik</button>
+					</div>
+						</form>
+		</div>
+		<div id="attachmentsList" class="col-lg-4 col-lg-offset-1">
+
+		</div>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="attachment.js"></script>
+
+</body>
+</html>
